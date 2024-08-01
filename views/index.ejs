@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bird Sighting App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Bird Sighting App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/addPost">Add new post</a>
+          </li> 
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Latest Bird Sightings</h2>
+    
+    <!-- Bootstrap Carousel -->
+    <div id="birdCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% for(let i = 0; i < bird_sightings.length; i++) { %>
+          <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+            <img src="/images/<%= bird_sightings[i].bird_image %>" class="d-block w-100" alt="Bird Image">
+            <div class="carousel-caption d-none d-md-block">
+              <h5><%= bird_sightings[i].bird_name %></h5>
+              <p><%= bird_sightings[i].location %></p>
+              <p><%= bird_sightings[i].sighted_at_formatted %></p>
+            </div>
+          </div>
+        <% } %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#birdCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#birdCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <!-- End Bootstrap Carousel -->
+
+    <hr>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Bird Name</th>
+          <th>Image</th>
+          <th>Time</th>
+          <th>Location</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < bird_sightings.length; i++) { %>
+          <tr>
+            <td><a href="/birds_sighting/<%= bird_sightings[i].id %>"><%= bird_sightings[i].bird_name %></a></td>
+            <td><img src="/images/<%= bird_sightings[i].bird_image %>" width="80" height="60"></td>
+            <td><%= bird_sightings[i].sighted_at_formatted %></td>
+            <td><%= bird_sightings[i].location %></td>
+            <td><a href="/editPost/<%= bird_sightings[i].id %>">Edit</a></td>
+            <td><a href="/deletePost/<%= bird_sightings[i].id %>" onclick="return confirm('Are you sure to delete?')">Delete</a></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <a href="/addPost" class="btn btn-primary">Add New Post</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
